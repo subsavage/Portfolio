@@ -7,17 +7,13 @@ import 'package:flutter/material.dart';
 class Player extends SpriteAnimationComponent {
   Vector2 velocity = Vector2.zero();
 
-  Player()
-      : super(
-            size: Vector2(128, 128),
-            anchor: Anchor.bottomCenter); // Set the size to avoid stretching
-
+  Player() : super(size: Vector2(128, 128), anchor: Anchor.bottomCenter);
   @override
   Future<void> onLoad() async {
     await super.onLoad();
 
-    animation = await _loadIdleAnimation(); // Load idle animation first
-    debugMode = true; // Enable debug mode to see the bounding box
+    animation = await _loadIdleAnimation();
+    debugMode = true;
   }
 
   Future<SpriteAnimation> _loadIdleAnimation() async {
@@ -26,9 +22,9 @@ class Player extends SpriteAnimationComponent {
     return SpriteAnimation.fromFrameData(
       idleSpriteSheet,
       SpriteAnimationData.sequenced(
-        amount: 6, // Number of frames in the idle animation
-        textureSize: Vector2(128, 128), // Use frame size for idle animation
-        stepTime: 0.1, // Adjust for desired playback speed
+        amount: 6,
+        textureSize: Vector2(128, 128),
+        stepTime: 0.1,
         loop: true,
       ),
     );
@@ -40,10 +36,9 @@ class Player extends SpriteAnimationComponent {
     return SpriteAnimation.fromFrameData(
       runSpriteSheet,
       SpriteAnimationData.sequenced(
-        amount: 10, // Number of frames in the running animation
-        textureSize: Vector2(
-            128, 128), // Use consistent frame size for running animation
-        stepTime: 0.1, // Adjust for desired playback speed
+        amount: 10,
+        textureSize: Vector2(128, 128),
+        stepTime: 0.1,
         loop: true,
       ),
     );
@@ -52,16 +47,16 @@ class Player extends SpriteAnimationComponent {
   void move(double speed) async {
     if (speed > 0) {
       velocity.x = speed; // Move right
-      animation = await _loadRunAnimation(); // Switch to running animation
+      animation = await _loadRunAnimation();
     } else {
       velocity.x = 0; // Stop movement
-      animation = await _loadIdleAnimation(); // Switch to idle animation
+      animation = await _loadIdleAnimation();
     }
   }
 
   @override
   void update(double dt) {
     super.update(dt);
-    position.add(velocity * dt); // Update position based on velocity
+    position.add(velocity * dt);
   }
 }
