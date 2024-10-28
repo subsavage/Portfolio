@@ -14,7 +14,7 @@ class MainGame extends FlameGame<GameWorld> with KeyboardEvents {
 
   @override
   Color backgroundColor() {
-    return super.backgroundColor();
+    return Color.fromARGB(255, 255, 255, 255);
   }
 
   @override
@@ -30,9 +30,10 @@ class MainGame extends FlameGame<GameWorld> with KeyboardEvents {
         world.player.move(-moveSpeed);
         return KeyEventResult.handled;
       }
-      return KeyEventResult.ignored;
+    } else if (event is KeyUpEvent) {
+      world.player.move(0);
     }
 
-    return KeyEventResult.handled;
+    return KeyEventResult.ignored;
   }
 }
