@@ -17,13 +17,13 @@ class Player extends SpriteAnimationComponent {
   }
 
   Future<SpriteAnimation> _loadIdleAnimation() async {
-    final idleSpriteSheet = await Flame.images.load('player_idle.png');
+    final idleSpriteSheet = await Flame.images.load('ship.png');
 
     return SpriteAnimation.fromFrameData(
       idleSpriteSheet,
       SpriteAnimationData.sequenced(
-        amount: 6,
-        textureSize: Vector2(128, 128),
+        amount: 1,
+        textureSize: Vector2(512, 512),
         stepTime: 0.1,
         loop: true,
       ),
@@ -31,13 +31,13 @@ class Player extends SpriteAnimationComponent {
   }
 
   Future<SpriteAnimation> _loadRunAnimation() async {
-    final runSpriteSheet = await Flame.images.load('player_run.png');
+    final runSpriteSheet = await Flame.images.load('ship.png');
 
     return SpriteAnimation.fromFrameData(
       runSpriteSheet,
       SpriteAnimationData.sequenced(
-        amount: 10,
-        textureSize: Vector2(128, 128),
+        amount: 1,
+        textureSize: Vector2(512, 512),
         stepTime: 0.1,
         loop: true,
       ),
