@@ -3,22 +3,23 @@ import 'package:flame/components.dart';
 import 'package:flame/sprite.dart';
 import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
+import 'package:portfolio/pages/missile.dart';
 
 class Player extends SpriteAnimationComponent {
   Vector2 velocity = Vector2.zero();
+  final List<Missile> missiles = [];
 
   Player() : super(size: Vector2(128, 128), anchor: Anchor.bottomCenter);
+
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-
     animation = await _loadIdleAnimation();
     debugMode = true;
   }
 
   Future<SpriteAnimation> _loadIdleAnimation() async {
     final idleSpriteSheet = await Flame.images.load('ship.png');
-
     return SpriteAnimation.fromFrameData(
       idleSpriteSheet,
       SpriteAnimationData.sequenced(
@@ -32,7 +33,6 @@ class Player extends SpriteAnimationComponent {
 
   Future<SpriteAnimation> _loadRunAnimation() async {
     final runSpriteSheet = await Flame.images.load('ship.png');
-
     return SpriteAnimation.fromFrameData(
       runSpriteSheet,
       SpriteAnimationData.sequenced(
@@ -44,12 +44,11 @@ class Player extends SpriteAnimationComponent {
     );
   }
 
-  void move(double speed) async {
-    if (speed > 0) {
-      velocity.x = speed; // Move right
+  void move(Vector2 newVelocity) async {
+    velocity = newVelocity;
+    if (newVelocity != Vector2.zero()) {
       animation = await _loadRunAnimation();
     } else {
-      velocity.x = 0; // Stop movement
       animation = await _loadIdleAnimation();
     }
   }
@@ -58,5 +57,18 @@ class Player extends SpriteAnimationComponent {
   void update(double dt) {
     super.update(dt);
     position.add(velocity * dt);
+  }
+
+  void shoot() {
+    // Create a missile for the left edge
+    final leftMissile = Missile(position.clone());
+    leftMissile.shoot(position + Vector2(size.x / 2, 0), Vector2(1, 0));
+    missiles.add(leftMissile);
+    add(leftMissile);
+
+    final rightMissile = Missile(position.clone());
+    rightMissile.shoot(position + Vector2(size.x / 2, 100), Vector2(1, 0));
+    missiles.add(rightMissile);
+    add(rightMissile);
   }
 }
