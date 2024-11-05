@@ -60,14 +60,15 @@ class Player extends SpriteAnimationComponent {
   }
 
   void shoot() {
-    // Create a missile for the left edge
-    final leftMissile = Missile(position.clone());
-    leftMissile.shoot(position + Vector2(size.x / 2, 0), Vector2(1, 0));
+    final leftMissilePosition = position + Vector2(size.x / 4, 0);
+    final leftMissile = Missile(leftMissilePosition);
+    leftMissile.shoot(leftMissile.position, Vector2(1, 0));
     missiles.add(leftMissile);
     add(leftMissile);
 
-    final rightMissile = Missile(position.clone());
-    rightMissile.shoot(position + Vector2(size.x / 2, 100), Vector2(1, 0));
+    final rightMissilePosition = position + Vector2(size.x / 4, 100);
+    final rightMissile = Missile(rightMissilePosition);
+    rightMissile.shoot(rightMissile.position, Vector2(1, 0));
     missiles.add(rightMissile);
     add(rightMissile);
   }
